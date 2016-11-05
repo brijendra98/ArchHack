@@ -49,10 +49,14 @@
 
                 <DatePicker
                     android:inputType="date"
+                    android:datePickerMode="spinner"
+                    android:endYear="2016"
+                    android:startYear="1900"
                     android:ems="10"
                     android:id="@+id/birthday"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:calendarViewShown="false" />
 
                 <TextView
                     android:text="Height"
@@ -89,7 +93,8 @@
                         <TextView
                             android:text="In."
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat" />
                 </LinearLayout>
 
                 <TextView
@@ -98,12 +103,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp" />
-
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:weightSum="1">
                 <EditText
                     android:id="@+id/weight"
                     android:inputType="number"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent" />
+                    android:layout_width="100dp"
+                    android:layout_weight="0.96" />
+                <TextView
+                    android:text="Lb."
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+                </LinearLayout>
 
                 <TextView
                     android:text="Blood Type"
@@ -112,12 +128,31 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp" />
 
-                <EditText
+                <RadioGroup
                     android:id="@+id/blood"
                     android:maxLength="2"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:inputType="textCapCharacters" />
+                    android:inputType="textCapCharacters" >
+                        <RadioButton
+                            android:id="@+id/ab"
+                            android:text="AB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton android:id="@+id/a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A"/>
+                        <RadioButton android:id="@+id/b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B"/>
+                        <RadioButton android:id="@+id/o"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="O"/>
+
+                </RadioGroup>
 
                 <TextView
                     android:text="Organ Donor"
@@ -125,15 +160,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp" />
-
-                <Switch
-                    android:ems="10"
-                    android:id="@+id/donor"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textOff="NO"
-                    android:textOn="YES"
-                    android:hint="YES/NO" />
+                    android:layout_width="70dp"
+                    android:weightSum="1">
+
+                        <TextView
+                            android:text="NO"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat"
+                            android:layout_weight="0.07" />
+
+                        <Switch
+                            android:ems="10"
+                            android:id="@+id/donor"
+                            android:layout_height="wrap_content"
+                            android:layout_width="38dp"
+                            android:textAlignment="center"
+                            android:layout_weight="0.05" />
+
+                        <TextView
+                            android:text="YES"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat"
+                            android:layout_weight="0.10"
+                            android:textAlignment="textEnd" />
+                </LinearLayout>
 
                 <TextView
                     android:text="Known Diseases"
@@ -160,7 +215,7 @@
                 <EditText
                     android:inputType="text|textCapWords|textMultiLine"
                     android:ems="10"
-                    android:id="@+id/alergies"
+                    android:id="@+id/allergies"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent" />
 
