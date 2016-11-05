@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+
+    <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&libraries=places&libraries=geolocation" type="text/javascript"></script>
+    
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+   
+    <title>Map</title>
+    
+    <style>
+
+    #map{
+     	  height: 650px;
+        width: 1000px;
+    }
+
+    </style>
+  </head>
+
+  <body>
+
+    <input id="zipInput" type="number"/>
+  	<button id="demo" onclick="changeLocation()" type="button">Go</button>
+    <button id="myLoc" onclick="flyToMyLocation()" type="button"> My Location</button>
+
+    <div id="map"></div>
+    <div id="test"> </div>
+
+    <script>
+    		    //This script tag block goes to bottom of the webpage
+
+        var x = document.getElementById('test');
+
+      	var curr_lat = 0;
+      	var curr_long = 0;
+        var curr_location;
+
+        var mymap;
+        var infowindow;
+        var service;
+
+        var resultCount = 0;
+        var list = "hello";
+
+        function initMap(){
+
+            curr_location = new google.maps.LatLng(38.649583, -90.311203)
+
+            var mapOptions = {
+                zoom: 12,
+                center: curr_location,
+                //mapTypeId: 'terrain'
+            };
+
+            mymap = new google.maps.Map(document.getElementById('map'),
+            mapOptions);
+
+            infowindow = new google.maps.InfoWindow();
+            
+
+                var image = 'https://www.google.com/mobile/images/gmm/blue_dot_mylocation.gif';
+                var beachMarker = new google.maps.Marker({
+                  position: curr_location,
+                  map: mymap,
+                  icon: image
+                });
+                
+                service = new google.maps.places.PlacesService(mymap);
+
+                service.nearbySearch({
+                    location: curr_location,
+                    //radius: 10000,          //cannot be used with rankBy
+                    rankBy: google.maps.places.RankBy.DISTANCE,
+                    keyword: 'hospitals'
+                }, search_callback);
+        }
+
+        function search_callback(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            resultCount = results.length;
+
+            list += "<div> I am at "+ curr_location +" and "+ resultCount +" place(s) found!</div><ol> "
+            for (var i = 0; i < resultCount; i++) {
+              createMarker(results[i]);
+              
+              list += "<li> "+ results[i].name + " -----> " + results[i].place_id +  " (" + (i+1) + "/" + resultCount + ") </li> ";
+                service.getDetails({
+                    placeId: results[i].place_id
+                }, details_callback);
+
+            }
+            list+="</ol>";
+          }
+          x.innerHTML = list;
+
+        }
+
+        function details_callback(place, status){
+          if (status === google.maps.places.PlacesServiceStatus.OK){
+              var new_lat = place.geometry.location.lat();
+              var new_lng = place.geometry.location.lng();
+              var new_LatLng = new google.maps.LatLng(new_lat, new_lng);
+
+              x.innerHTML += new_LatLng + "<br />";
+
+          }
+          else {
+            x.innerHTML = status;
+          }
+        }
+
+
+
+
+        function createMarker(place) {
+          var placeLoc = place.geometry.location;
+        //  var home_icon = "http://www.umassmed.edu/globalassets/global-images-and-files/images/icons/home-icon-gray.png"
+          var marker = new google.maps.Marker({
+              map: mymap,
+              position: place.geometry.location,
+             // icon: home_icon
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+              var the_lat= place.geometry.location.lat();
+              var the_lng= place.geometry.location.lng();
+
+                infowindow.setContent(place.name);
+                infowindow.open(mymap, this);
+                //alert("You clicked on "+place.name);
+              });
+        }
+      
+
+        
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-rOcfVyM_WepTQEdwU8hdfCXb7MggUXk&libraries=places&callback=initMap"> 
+    </script>
+
+  </body>
+</html>
