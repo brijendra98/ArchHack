@@ -1,5 +1,8 @@
 package info.heinhtet.apps.archhacksapp;
 
+import android.app.Notification;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -19,8 +22,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    public String user_name, user_age, user_height, user_weight,
-            user_bloodtype, user_organdoner, user_diseases, user_allergies, user_notes;
+    public String user_name, user_age, user_height, user_weight, user_bloodtype,
+            user_organdoner, user_diseases, user_allergies, user_notes, address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText input_diseases = (EditText) findViewById(R.id.diseases);
         final EditText input_allergies = (EditText) findViewById(R.id.allergies);
         final EditText input_notes = (EditText) findViewById(R.id.notes);
+
 
         final Button submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -69,9 +73,43 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(user_allergies);
                 System.out.println(user_notes);
 
+                {Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+                    intent.setType("text/plain");
+                    hospital_info hosp = new hospital_info();
+                    String send_to_hosp;
+                    send_to_hosp = hosp.hosp_email;
+
+                    String pt_info;
+                    pt_info = "Name: " + user_name + "\r\nAge= " + user_age + "\r\nBloodType = "
+                            + user_bloodtype + "\r\nHeight = " + user_height + "\r\nWeight = "
+                            + user_weight + "\r\nAllergies= " + user_allergies + "\r\nDiseases= "
+                            + user_diseases + "\r\nNotes= " + user_notes;
+                    send_to_hosp = "mailto:" + send_to_hosp;
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Emergency");
+                    intent.putExtra(Intent.EXTRA_TEXT, pt_info);
+                    intent.setData(Uri.parse(send_to_hosp));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);}
             }
 
         });
 
     }
+
+    public class hospital_info {
+        String hosp_name;
+        String hosp_email;
+        double dist_from_pt;
+        public hospital_info()
+
+        {hosp_email="contact@hospi.tal";
+            hosp_name="Nearest best hospital";
+            dist_from_pt=0;}
+
+        public hospital_info(String nm, String em, double dist)
+        {hosp_email=em;
+            hosp_name=nm;
+            dist_from_pt=dist;}
+    }
+
 }
