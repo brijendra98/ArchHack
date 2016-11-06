@@ -1,8 +1,16 @@
 package info.heinhtet.apps.archhacksapp;
 
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -29,6 +37,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+/*
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                System.out.println(location.getProvider());
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);} */
 
         final EditText input_name = (EditText) findViewById(R.id.name);
         final DatePicker input_birthday = (DatePicker) findViewById(R.id.birthday);
@@ -63,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 user_allergies = "[ " +input_allergies.getText().toString()+ " ]";
                 user_notes = "[" +input_notes.getText().toString()+ " ]";
 
-                System.out.println(user_name);
+      /*          System.out.println(user_name);
                 System.out.println(user_age);
                 System.out.println(user_height);
                 System.out.println(user_weight);
@@ -71,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(user_organdoner);
                 System.out.println(user_diseases);
                 System.out.println(user_allergies);
-                System.out.println(user_notes);
+                System.out.println(user_notes);         */
 
                 {Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
                     intent.setType("text/plain");
