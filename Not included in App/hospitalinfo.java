@@ -117,24 +117,8 @@ public void CreateArray() throws IOException
 
 public void SortByVal(hospital[] arr)
 {
-     int j;
-     boolean flag = true;   // set flag to true to begin first pass
-     hospital temp;   //holding variable
-
-     while ( flag )
-     {
-            flag= false;    //set flag to false awaiting a possible swap
-            for( j=0;  j < arr.length -1;  j++ )
-            {
-                   if ( arr[ j ].Val < arr[j+1].Val )   // change to > for ascending sort
-                   {
-                           temp = arr[ j ];                //swap elements
-                           arr[ j ] = arr[ j+1 ];
-                           arr[ j+1 ] = temp;
-                          flag = true;              //shows a swap occurred  
-                  } 
-            } 
-      } 
+     Arrays.sort(arr);
+    //Briejndra NAg
 }
 
   
